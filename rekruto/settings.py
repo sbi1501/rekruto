@@ -17,6 +17,9 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+IS_HEROKU = "DYNO" in os.environ
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -24,9 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yz!4nykm6ua&5bq2xwo&%@2ys@wrw*$7b&3efo4q5a_2q3c%3j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if not IS_HEROKU:
+    DEBUG = True
 
-ALLOWED_HOSTS = []
+if IS_HEROKU:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = []
 
 
 # Application definition
